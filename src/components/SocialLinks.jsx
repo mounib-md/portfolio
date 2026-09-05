@@ -8,7 +8,6 @@ import {
 } from "lucide-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import PresenceWidget from "./PresenceWidget";
 
 const socialLinks = [
   {
@@ -54,6 +53,8 @@ const socialLinks = [
     subText: "@eki_zulfar",
     icon: ({ className, ...props }) => (
       <svg
+        className={className}
+        {...props}
         width="24px"
         height="24px"
         viewBox="0 0 45 45"

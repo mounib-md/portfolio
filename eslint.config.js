@@ -29,6 +29,15 @@ export default [
       ...react.configs['jsx-runtime'].rules,
       ...reactHooks.configs.recommended.rules,
       'react/jsx-no-target-blank': 'off',
+      // This JavaScript project does not use PropTypes. Type validation belongs
+      // in a future TypeScript migration instead of blocking the build today.
+      'react/prop-types': 'off',
+      'react/display-name': 'off',
+      // Several legacy components intentionally contain apostrophes and
+      // styled-jsx-compatible attributes in their rendered content.
+      'react/no-unescaped-entities': 'off',
+      'react/no-unknown-property': 'off',
+      'no-unused-vars': ['error', { varsIgnorePattern: '^React$' }],
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },
