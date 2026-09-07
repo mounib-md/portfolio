@@ -14,7 +14,6 @@ import {
   Globe,
   CheckCircle2,
   Award,
-  Users,
   X,
   Image as ImageIcon
 } from "lucide-react";
@@ -64,7 +63,7 @@ const activities = [
     organization: "Club Mécatronique ENICarthage (CME)",
     role: "Active Member",
     category: "Robotics & Engineering Club",
-    description: "Participated in hands-on technical workshops focused on embedded systems, hardware prototyping, and mechatronic design. Collaborated within multi-disciplinary engineering teams to build and test autonomous robots for national competitions.",
+    description: "Turned ideas into motion as an active CME member—designing embedded systems, building hardware prototypes, and tackling real mechatronic challenges. Collaborated with ambitious multidisciplinary teams to develop, test, and showcase autonomous robots in high-energy national competitions.",
     tags: ["Robotics", "Embedded Systems", "Hardware Prototyping", "Team Collaboration"],
     images: [
       { src: "/images/cme1.png", description: "Club group photo — outdoor evening" },
@@ -321,8 +320,12 @@ const Portofolio = () => {
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
                   <div className="flex items-center gap-3">
-                    <div className="p-2.5 rounded-xl bg-[#6366f1]/10 border border-[#6366f1]/20 text-[#a855f7]">
-                      <Users className="w-6 h-6" />
+                    <div className="w-24 h-14 sm:w-28 sm:h-16 shrink-0 rounded-xl overflow-hidden bg-white border border-white/20 shadow-md shadow-black/20">
+                      <img
+                        src="/images/cme.png"
+                        alt="Club Mécatronique ENICarthage logo"
+                        className="w-full h-full object-cover object-center"
+                      />
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-white group-hover:text-[#a855f7] transition-colors">
