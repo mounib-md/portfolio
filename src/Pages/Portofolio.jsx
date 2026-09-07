@@ -12,12 +12,16 @@ import {
   Server,
   Database,
   Globe,
-  CheckCircle2
+  CheckCircle2,
+  Award,
+  Users,
+  X,
+  Image as ImageIcon
 } from "lucide-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-// Projects fully translated into English
+// Initial Projects Data
 const initialProjects = [
   {
     id: 1,
@@ -53,7 +57,25 @@ const initialProjects = [
   }
 ];
 
-// All skills extracted from CV, translated and categorized in English
+// Extracurricular Activities Data (Chemins relatifs au dossier public)
+const activities = [
+  {
+    id: 1,
+    organization: "Club Mécatronique ENICarthage (CME)",
+    role: "Active Member",
+    category: "Robotics & Engineering Club",
+    description: "Participated in hands-on technical workshops focused on embedded systems, hardware prototyping, and mechatronic design. Collaborated within multi-disciplinary engineering teams to build and test autonomous robots for national competitions.",
+    tags: ["Robotics", "Embedded Systems", "Hardware Prototyping", "Team Collaboration"],
+    images: [
+      { src: "/images/cme1.png", description: "Club group photo — outdoor evening" },
+      { src: "/images/cme2.png", description: "Winning team" },
+      { src: "/images/cme3.png", description: "Workshop indoor" },
+      { src: "/images/cme4.png", description: "Competition hall" }
+    ]
+  }
+];
+
+// Technical Skills Data
 const skillCategories = [
   {
     title: "Programming Languages",
@@ -124,6 +146,7 @@ const skillCategories = [
 const Portofolio = () => {
   const [activeTab, setActiveTab] = useState("projects");
   const [projects, setProjects] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     AOS.init({ once: false });
@@ -134,6 +157,7 @@ const Portofolio = () => {
   const tabs = [
     { id: "projects", label: "Projects", icon: Code },
     { id: "skills", label: "Skills", icon: Boxes },
+    { id: "activities", label: "Activities", icon: Award },
   ];
 
   return (
@@ -152,7 +176,7 @@ const Portofolio = () => {
           data-aos="zoom-in-up"
           data-aos-duration="800"
         >
-          Explore my journey through engineering projects and technical skill sets.
+          Explore my journey through engineering projects, technical skill sets, and extracurricular activities.
         </p>
       </div>
 
@@ -162,7 +186,7 @@ const Portofolio = () => {
         data-aos="fade-up"
         data-aos-duration="1000"
       >
-        <div className="bg-[#0b0c1b]/80 border border-white/10 p-2 rounded-2xl backdrop-blur-xl grid grid-cols-2 gap-2 shadow-2xl">
+        <div className="bg-[#0b0c1b]/80 border border-white/10 p-2 rounded-2xl backdrop-blur-xl grid grid-cols-3 gap-2 shadow-2xl">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -170,7 +194,7 @@ const Portofolio = () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-sm sm:text-base font-medium transition-all duration-300 ${
+                className={`flex items-center justify-center gap-2 py-3 px-3 sm:px-4 rounded-xl text-xs sm:text-base font-medium transition-all duration-300 ${
                   isActive
                     ? "bg-gradient-to-r from-[#2a245c] to-[#1e1b4b] text-white border border-[#a855f7]/40 shadow-[0_0_20px_rgba(168,85,247,0.2)]"
                     : "text-gray-400 hover:text-white hover:bg-white/5"
@@ -284,7 +308,111 @@ const Portofolio = () => {
             })}
           </div>
         )}
+
+        {/* ACTIVITIES TAB WITH PHOTO GALLERY */}
+        {activeTab === "activities" && (
+          <div className="grid grid-cols-1 gap-6">
+            {activities.map((act) => (
+              <div 
+                key={act.id}
+                className="group bg-gray-900/40 border border-white/10 rounded-2xl p-6 hover:border-[#a855f7]/50 transition-all duration-500 space-y-6"
+                data-aos="fade-up"
+                data-aos-duration="800"
+              >
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 rounded-xl bg-[#6366f1]/10 border border-[#6366f1]/20 text-[#a855f7]">
+                      <Users className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-white group-hover:text-[#a855f7] transition-colors">
+                        {act.organization}
+                      </h3>
+                      <p className="text-sm text-[#a855f7] font-medium">{act.role}</p>
+                    </div>
+                  </div>
+                  <span className="text-xs px-3 py-1 rounded-full bg-purple-950/60 text-purple-300 border border-purple-800/50 self-start sm:self-center">
+                    {act.category}
+                  </span>
+                </div>
+
+                <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
+                  {act.description}
+                </p>
+
+                {/* Photo Gallery Grid */}
+                {act.images && act.images.length > 0 && (
+                  <div className="space-y-3 pt-2">
+                    <div className="flex items-center gap-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                      <ImageIcon className="w-4 h-4 text-[#a855f7]" />
+                      <span>Event Gallery</span>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+                      {act.images.map((image, idx) => (
+                        <div 
+                          key={idx}
+                          onClick={() => setSelectedImage(image.src)}
+                          className="relative aspect-[16/10] rounded-xl overflow-hidden border border-white/10 cursor-pointer group/img hover:border-[#a855f7] hover:shadow-lg hover:shadow-purple-500/20 transition-all duration-300"
+                        >
+                          <img 
+                            src={image.src} 
+                            alt={`${act.organization} — ${image.description}`}
+                            className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-500"
+                            loading="lazy"
+                          />
+                          <div className="absolute inset-x-0 top-0 bg-gradient-to-b from-black/75 to-transparent px-4 py-3">
+                            <p className="text-sm font-semibold text-white drop-shadow-md">
+                              {image.description}
+                            </p>
+                          </div>
+                          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <span className="text-xs font-medium text-white bg-black/60 px-2 py-1 rounded-md backdrop-blur-sm">
+                              Zoom
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex flex-wrap gap-2 pt-2">
+                  {act.tags.map((tag, i) => (
+                    <span 
+                      key={i}
+                      className="text-xs px-3 py-1 rounded-full bg-[#6366f1]/10 text-[#a855f7] border border-[#6366f1]/20"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
+
+      {/* Lightbox Modal for Enlarged Image */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4"
+          onClick={() => setSelectedImage(null)}
+        >
+          <div className="relative max-w-6xl w-full max-h-[90vh] flex items-center justify-center">
+            <button 
+              onClick={() => setSelectedImage(null)}
+              className="absolute -top-12 right-0 text-white hover:text-[#a855f7] bg-white/10 hover:bg-white/20 p-2 rounded-full transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            <img 
+              src={selectedImage} 
+              alt="Enlarged view" 
+              className="max-w-full max-h-[88vh] object-contain rounded-xl border border-white/20 shadow-2xl"
+            />
+          </div>
+        </div>
+      )}
     </section>
   );
 };
