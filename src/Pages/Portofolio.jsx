@@ -3,7 +3,6 @@ import {
   Code, 
   Boxes, 
   ExternalLink, 
-  Github, 
   Cloud, 
   Container, 
   Cpu, 
@@ -241,18 +240,8 @@ const Portofolio = () => {
                   )}
                 </div>
 
-                <div className="flex items-center gap-4 pt-6 mt-4 border-t border-white/10">
-                  {project.github && (
-                    <a 
-                      href={project.github} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-xs text-gray-300 hover:text-white transition-colors"
-                    >
-                      <Github className="w-4 h-4" /> Code
-                    </a>
-                  )}
-                  {project.demo && project.demo !== "#" && (
+                {project.demo && project.demo !== "#" && (
+                  <div className="flex items-center gap-4 pt-6 mt-4 border-t border-white/10">
                     <a 
                       href={project.demo} 
                       target="_blank" 
@@ -261,8 +250,8 @@ const Portofolio = () => {
                     >
                       <ExternalLink className="w-4 h-4" /> Demo
                     </a>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
