@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React, { useState, lazy, Suspense } from "react";
 import { HelmetProvider } from "react-helmet-async";
+import { Analytics } from "@vercel/analytics/react";
 import "./index.css";
 import Navbar from "./components/Navbar";
 import Home from "./Pages/Home";
@@ -8,7 +9,6 @@ import About from "./Pages/About";
 import AnimatedBackground from "./components/Background";
 import { AnimatePresence } from "framer-motion";
 import Footer from "./components/Footer";
-
 
 const Portofolio = lazy(() => import("./Pages/Portofolio"));
 const ContactPage = lazy(() => import("./Pages/Contact"));
@@ -30,7 +30,6 @@ const LandingPage = ({ showWelcome, setShowWelcome }) => {
       {!showWelcome && (
         <>
           <Navbar />
-      
           <Home />
           <About />
           <Suspense fallback={<div className="h-20" />}>
@@ -57,11 +56,10 @@ function App() {
   const [showWelcome, setShowWelcome] = useState(true);
 
   return (
-    
     <HelmetProvider>
       <div className="pointer-events-none">
-  <AnimatedBackground />
-</div>
+        <AnimatedBackground />
+      </div>
       <BrowserRouter>
         <Routes>
           {/* PUBLIC */}
@@ -88,6 +86,8 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
+      {/* Vercel Analytics Tracker */}
+      <Analytics />
     </HelmetProvider>
   );
 }
